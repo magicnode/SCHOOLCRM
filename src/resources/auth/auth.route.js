@@ -7,16 +7,8 @@ router.route('/')
       .get(Ctrl.index)
       .post(Ctrl.create);
 
-router.route('/:_id/pics')
-			.get(Ctrl.getPics)
-
-router.route('/hotest')
-			.get(Ctrl.getHotest)
-
-router.route('/random')
-      .get(Ctrl.random)
 
 export default {
 	router,
-	baseUrl: '/albums'
+	baseUrl: '/auth'
 }
