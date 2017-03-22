@@ -6,8 +6,7 @@ const Schema = mongoose.Schema;
 
 const adminSchema = Schema({
   name    : String,
-  age     : Number,
-  stories : [{ type: Schema.Types.ObjectId, ref: 'Story' }]
+  age     : Number
 })
 
 export default mongoose.model('Admin', adminSchema, 'admin');

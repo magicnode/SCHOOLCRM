@@ -1,5 +1,5 @@
 import express from 'express'
-import Ctrl from './auth.controller'
+import Ctrl from './lab.controller'
 
 const router = express.Router();
 
@@ -10,5 +10,5 @@ router.route('/')
 
 export default {
 	router,
-	baseUrl: '/auth'
+	baseUrl: '/labs'
 }
