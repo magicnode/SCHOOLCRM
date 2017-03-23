@@ -1,5 +1,5 @@
 /*
- * Module description: department
+ * Module description: department 学院 工程训练中心
  */
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;

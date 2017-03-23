@@ -9,7 +9,8 @@ const labSupervisorSchema = Schema({
   	type: String,
   	unique:true
   },
-  labs: [{ type: Schema.Types.ObjectId, ref: 'Lab' }]
+  labs: [{ type: Schema.Types.ObjectId, ref: 'Lab' }],
+  CreateAt: { type: Number, default: new Date().getTime() }
 })
 
 labSupervisorSchema.index({ name: 1}, {unique:true, background:true, w:1})
