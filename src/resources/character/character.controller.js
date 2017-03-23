@@ -4,8 +4,7 @@ import APIError from '../../helpers/apierror.helper'
 
 async function index(req, res, next) {
     try {
-        
-        return res.send('asdsad')
+        return res.send('oias8aisd')
     }catch (err) {
         console.error(err)
         err = new APIError(err.message, httpStatus.NOT_FOUND, true);
