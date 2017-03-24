@@ -10,7 +10,7 @@ const classifySchema = Schema({
   	unique:true
   },
   description: String, //描述
-  _goods: [{ type: Schema.Types.ObjectId, ref: 'Lab' }],
+  _goods: [{ type: Schema.Types.ObjectId, ref: 'Goods' }],
   CreateAt: { type: Number, default: new Date().getTime() }
 })
 

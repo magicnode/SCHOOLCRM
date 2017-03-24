@@ -5,15 +5,18 @@ const router = express.Router();
 
 router.route('/')
       .get(userCtrl.index)
-      .post(userCtrl.create);
+      .post(userCtrl.create)
 
 router.route('/:_id')
       .get(userCtrl.show)
       .put(userCtrl.update)
-      .delete(userCtrl.destroy);
+      .delete(userCtrl.destroy)
 
-router.route('/test/test')
-			.get(userCtrl.test)
+router.route('/:_id/character')
+      .get(userCtrl.getCharacter)
+      .post(userCtrl.setCharacter)
+      .put(userCtrl.setCharacter)
+      .delete(userCtrl.delCharater)
 
 export default {
 	router,

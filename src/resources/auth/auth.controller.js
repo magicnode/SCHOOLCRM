@@ -1,38 +1,55 @@
 import httpStatus from 'http-status'
+import JWT from 'jsonwebtoken'
 
 import APIError from '../../helpers/apierror.helper'
+import User from '../../models/user.model'
+import _crypto from '../../helpers/crypto.helper'
 
-async function index(req, res, next) {
+import config from '../../../config/env'
+
+const jwtsecret = config.jwtSecret
+
+async function create(req, res, next) {
     try {
-        
-        return res.json(album)
-    }catch (err) {
+        let { name, pwd } = req.body
+        let query = {name}
+        let user = await User.findOne(query)
+        if (!user) {
+            return res.send('no such user')
+        }
+        const truepwd = await _crypto.decipherpromise(user.hashed_password, user.salt)
+        if (truepwd !== pwd) {
+            return res.send('pwd is wrong!')
+        }
+        const jwt_token = {
+            user_id: user._id,
+            name: user.name
+        }
+        const token = JWT.sign(jwt_token, jwtsecret, {
+            expiresIn: '2000h'
+        })
+        return res.json({token})
+    } catch (err) {
         console.error(err)
         err = new APIError(err.message, httpStatus.NOT_FOUND, true);
         return next(err);
     }
 }
 
-function create(req, res, next) {
-
-}
-
-function show(req, res, next) {
-
-}
-
-function update(req, res, next) {
-
-}
-
-function destroy(req, res, next) {
-
+function check(req, res, next) {
+    const params = req.params;
+    User.findOneAndRemove(params)
+        .then(result => {
+            return res.json(result)
+        })
+        .catch(err => {
+            console.error(err)
+            err = new APIError(err.message, httpStatus.NOT_FOUND, true);
+            return next(err);
+        })
 }
 
 export default {
-    index,
     create,
-    show,
-    update,
-    destroy
+    check
 }

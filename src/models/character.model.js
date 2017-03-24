@@ -4,19 +4,32 @@
 
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-const character_Schema = new Schema({
+const Types = Schema.Types
+const characterSchema = new Schema({
     name: {
     	type: String, 
-    	required: true, 
-    	unique: true,
-    	enum: ['校长', '材料管理科', '审计处', '财务处', '实验室主管', '实验室员工']
-    }, //角色名字
-    permission: [{type: Schema.Types.ObjectId, ref: 'Permission'}], //包含的权限
+    	required: true,
+    	unique: true
+    }, //角色名字:审计处、财务处和校长,实验室主管,实验室员工，材料管理科， 库房管理员
+    user: {type: Types.ObjectId, ref: 'User'}, //创建者
     CreateAt: { type: Number, default: new Date().getTime() }
 })
 
-character_Schema.statics = {
+characterSchema.index({ name: 1}, {unique:true, background:true, w:1})
 
+characterSchema.statics = {
+	/**
+	 * List users in descending order of 'createdAt' timestamp.
+	 * @param {number} skip - Number of users to be skipped.
+	 * @param {number} limit - Limit number of users to be returned.
+	 * @returns {Promise<User[]>}
+	 */
+	list({ query = {}, fliter = null, skip = 0, limit = 50 } = {}) {
+	    return this.find(query, fliter)
+	        .sort({ timestamp: -1 })
+	        .skip(skip)
+	        .limit(limit)
+	}
 }
 
-mongoose.model('Character', character_Schema, 'character');
+export default mongoose.model('Character', characterSchema, 'character')

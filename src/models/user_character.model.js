@@ -4,14 +4,14 @@
 
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-const characterUserSchema = new Schema({
-	  character: {type: Schema.Types.ObjectId, ref: 'Character'},
+const userCharacterSchema = new Schema({
 	  user: {type: Schema.Types.ObjectId, ref: 'User'},
+	  character: {type: Schema.Types.ObjectId, ref: 'Character'},
     CreateAt: { type: Number, default: new Date().getTime() }
 })
 
-character_Schema.statics = {
+userCharacterSchema.statics = {
 
 }
 
-mongoose.model('Character', character_Schema, 'character');
+export default mongoose.model('userCharacter', userCharacterSchema, 'user_character')

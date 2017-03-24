@@ -1,14 +1,20 @@
-import express from 'express'
-import Ctrl from './auth.controller'
+import express from 'express';
+import authCtrl from './auth.controller';
 
 const router = express.Router();
 
 router.route('/')
-      .get(Ctrl.index)
-      .post(Ctrl.create);
+      .get(authCtrl.create)
+      .post(authCtrl.create)
 
+router.route('/:id')
+      .get(authCtrl.create)
+      .post(authCtrl.create)
+
+router.route('/check')
+    .post(authCtrl.check)
 
 export default {
-	router,
-	baseUrl: '/auth'
+    router,
+    baseUrl: '/auth'
 }
