@@ -6,12 +6,16 @@ function getUser () {
 
 }
 
-function rbac (req, res, next) {
-  // getUser(req.user)
-  // getCharacter()
-  // getPermission()
-  // getReqPath()
-  // judgePermission()
+// getUser(req.user)
+// getCharacter()
+// getPermission()
+// getReqPath()
+// judgePermission()
+
+function rbac (o) {
+  return function rbacMiddleware (req, res, next) {
+  	next()
+  }
 }
 
 export default rbac

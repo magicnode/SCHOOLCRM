@@ -16,7 +16,8 @@ import winstonInstance from './winston';
 import routes from '../src/resources';
 import config from './env';
 import APIError from '../src/helpers/apierror.helper';
-
+import RBAC from '../src/middleware/rbac';
+import Permission from '../src/middleware/permission';
 
 const app = express();
 if (config.env === 'development') {
@@ -43,30 +44,30 @@ if (config.env === 'production') {
     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
   }
 }
-app.use(cors(corsOptions));
-app.disable('x-powered-by');
+
+app.use(cors(corsOptions))
+app.disable('x-powered-by')
 
 //express jwt config
+app.use(expressJwt({
+  secret: config.jwtSecret,
+  getToken (req) {
+    if (req.headers.authorization) {
+        return req.headers.authorization;
+    } else if (req.query && req.query.token) {
+      return req.query.token;
+    }
+    return null;
+  }
+}).unless({path: [
+  {url: '/', methods: ['GET']},
+  {url: '/users', methods: ['POST']},
+  {url: '/auth', methods: ['GET', 'POST']},
+  {url: /\/spiders\/\w+/, methods: ['GET']}
+]}))
 
-// app.use(expressJwt({
-//   secret: config.jwtSecret,
-//   getToken (req) {
-//     if (req.headers.authorization) {
-//         return req.headers.authorization;
-//     } else if (req.query && req.query.token) {
-//       return req.query.token;
-//     }
-//     return null;
-//   }
-// }).unless({path: [
-//   '/captcha/image',
-//   {url: '/', methods: ['GET']},
-//   {url: /^(\/qr)+(\/url)+(\i)*/, methods: ['GET']},
-//   {url: /^(\/qr)+(\/url)*(\?)+(\w)*(\=)*(\w)*/, methods: ['GET']},
-//   {url: '/auth/random', methods: ['GET']},
-//   {url: '/auth', methods: ['GET', 'POST']},
-//   {url: /\/v1\/sms/i, methods: ['GET']}
-// ]}));
+app.use(RBAC)
+app.use(Permission({routes: routes}))
 
 app.use('/', routes);
 

@@ -4,9 +4,11 @@
 
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-const permission_Schema = new Schema({
-    name: { type: String, required: true, unique: true },//英文名
-    route: String, //所属路由
+const permissionSchema = new Schema({
+    name: { type: String, required: true, unique: true },//英文名get auth etc.
+    resource: { type: String }, //所属资源类型
+    url: String, //所属路由
+    description: String, //描述
     method: { 
         type: String,
         enum: ['get', 'post', 'put', 'delete']
@@ -14,8 +16,6 @@ const permission_Schema = new Schema({
     CreateTime: { type: Date, default: Date.now }
 })
 
-permission_Schema.statics = {
+permissionSchema.index({ name: 1}, {unique:true, background:true, w:1})
 
-}
-
-mongoose.model('Permission', permission_Schema, 'permission');
+export default mongoose.model('Permission', permissionSchema, 'permission')

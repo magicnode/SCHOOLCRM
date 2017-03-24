@@ -14,4 +14,4 @@ character_Schema.statics = {
 
 }
 
-mongoose.model('Character', character_Schema, 'character');
+export default mongoose.model('Character', character_Schema, 'character');
