@@ -71,8 +71,16 @@ async function getUserPermission ({user}) {
     }
 }
 
+function list ({ query = {}, fliter = null, skip = 0, limit = 50, Mon } = {}) {
+    return Mon.find(query, fliter)
+        .sort({ timestamp: -1 })
+        .skip(skip)
+        .limit(limit)
+}
+
 export default {
     uniqSave,
     setUserPermission,
-    getUserPermission
+    getUserPermission,
+    list
 }

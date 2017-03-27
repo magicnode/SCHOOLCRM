@@ -11,9 +11,9 @@ const listSchema = new Schema({
     },
     status: {type: Number, enum: [1,2,3,4]},//1 未审批、2 正在审批 3 审批结束
     description: String, //描述
-    _depart: { type: Schema.Types.ObjectId, ref: 'Department' },//所属院系或工程训练中心
-    _supervisors: { type: Schema.Types.ObjectId, ref: 'LabSupervisor' },//主管人员 审批人员
-    _goods: [{ type: Schema.Types.ObjectId, ref: 'ListGoods' }],//清单物品
+    depart: { type: Schema.Types.ObjectId, ref: 'Department' },//所属院系或工程训练中心
+    supervisors: { type: Schema.Types.ObjectId, ref: 'LabSupervisor' },//主管人员 审批人员
+    goods: [{ type: Schema.Types.ObjectId, ref: 'ListGoods' }],//清单物品
     CreateAt: { type: Number, default: new Date().getTime() }
 })
 
