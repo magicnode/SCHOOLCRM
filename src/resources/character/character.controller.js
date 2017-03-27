@@ -2,6 +2,7 @@ import httpStatus from 'http-status'
 
 import Character from '../../models/character.model'
 import CharacterPermission from '../../models/character_permission.model'
+import Permission from '../../models/permission.model'
 
 import APIError from '../../helpers/apierror.helper'
 import _mongo from '../../helpers/mongo.helper'
@@ -20,14 +21,34 @@ async function index(req, res, next) {
     try {
         let reqquery = req.query,
             skip = Number(reqquery.skip) || 0,
-            limit = Number(reqquery.limit) || 50
+            limit = Number(reqquery.limit) || 50,
+            permissions = Number(reqquery.permissions)
         let query = {}
-        const character = await Character.list({ query, skip, limit })
-        if (character.length === 0) {
+        let characters = await Character.list({ query, skip, limit })
+        const len = characters.length
+        if (len === 0) {
             let err = new APIError('not found', httpStatus.NOT_FOUND)
             return next(err)
         }
-        return res.json(character)
+        if (permissions === 1) {
+            let arr = []
+            for (let i = 0; i < len; i++) {
+                let CP = await CharacterPermission.find({character: characters[i]._id}, { permission: 1})
+                                                  .populate('permission')
+                let CPitem = await CP.map(function (item) {
+                    return item.permission
+                })
+                let ob = {}
+                ob._id = characters[i]._id
+                ob.name = characters[i].name
+                ob.permission = CPitem
+                await arr.push(ob)
+            }
+            return res.json(arr)
+        } else {
+            return res.json(characters)
+        }
+        
     }catch (err) {
         console.error(err)
         err = new APIError(err.message, httpStatus.NOT_FOUND, true);
@@ -96,6 +117,37 @@ async function setPermission (req, res, next) {
     }
 }
 
+async function delPermission (req, res, next) {
+    try {
+        const character = req.params._id
+        const { permission } = req.body
+        console.log(`character is ${character}, permission is ${permission}`)
+        const Cpssion = await CharacterPermission.remove({character, permission})
+        return res.send(Cpssion)
+    } catch (err) {
+        console.error(err)
+        err = new APIError(err.message, httpStatus.NOT_FOUND, true);
+        return next(err)
+    }
+}
+//获取未授权的权限
+async function getNoAuthPermission (req, res, next) {
+    try {
+        const character_id = req.params._id
+        const CP = await CharacterPermission.find({character: character_id})
+        const permissions = await CP.map(function(item){
+            let perm = item.permission
+            return perm
+        })
+        const permissionArr = await Permission.find({_id: {$nin: permissions}})
+        return res.json(permissionArr)
+    } catch (err) {
+        console.error(err)
+        err = new APIError(err.message, httpStatus.NOT_FOUND, true);
+        return next(err)
+    }
+}
+
 export default {
     index,
     create,
@@ -103,5 +155,7 @@ export default {
     update,
     destroy,
     getPermission,
-    setPermission
+    setPermission,
+    delPermission,
+    getNoAuthPermission
 }

@@ -30,4 +30,4 @@ function sendEmail() {
 
 }
 
-export default rbac
+export default sendEmail

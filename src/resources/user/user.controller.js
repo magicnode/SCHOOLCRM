@@ -132,8 +132,6 @@ async function setCharacter (req, res, next) {
         const { character } = req.body
         const doc = {character, user}
         const UC = await _mongo.uniqSave(doc, doc, UserCharacter)
-        const permission = _mongo.setUserPermission({ user, character })
-        console.log('permission', permission)
         return res.json(UC)
     } catch (err) {
         console.error(err)

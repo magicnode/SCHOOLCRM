@@ -49,26 +49,26 @@ app.use(cors(corsOptions))
 app.disable('x-powered-by')
 
 //express jwt config
-app.use(expressJwt({
-  secret: config.jwtSecret,
-  getToken (req) {
-    if (req.headers.authorization) {
-        return req.headers.authorization;
-    } else if (req.query && req.query.token) {
-      return req.query.token;
-    }
-    return null;
-  }
-}).unless({path: [
-  {url: '/', methods: ['GET']},
-  {url: '/users', methods: ['POST']},
-  {url: '/auth', methods: ['GET', 'POST']},
-  {url: '/permission/check', methods: ['GET']},
-  {url: /\/spiders\/\w+/, methods: ['GET']}
-]}))
+// app.use(expressJwt({
+//   secret: config.jwtSecret,
+//   getToken (req) {
+//     if (req.headers.authorization) {
+//         return req.headers.authorization;
+//     } else if (req.query && req.query.token) {
+//       return req.query.token;
+//     }
+//     return null;
+//   }
+// }).unless({path: [
+//   {url: '/', methods: ['GET']},
+//   {url: '/users', methods: ['POST']},
+//   {url: '/auth', methods: ['GET', 'POST']},
+//   {url: '/permission/check', methods: ['GET']},
+//   {url: /\/spiders\/\w+/, methods: ['GET']}
+// ]}))
 
-app.use(RBAC({}))
-app.use(Permission({routes: routes}))
+// app.use(RBAC({}))
+// app.use(Permission({routes: routes}))
 
 app.use('/', routes);
 

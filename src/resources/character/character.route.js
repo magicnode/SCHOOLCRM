@@ -10,6 +10,10 @@ router.route('/')
 router.route('/:_id/permission')
 		  .get(Ctrl.getPermission)
 		  .post(Ctrl.setPermission)
+		  .delete(Ctrl.delPermission)
+
+router.route('/:_id/noauthpermission')
+		  .get(Ctrl.getNoAuthPermission)
 
 export default {
 	router,

@@ -1,6 +1,7 @@
 import User from '../../models/user.model'
 import Character from '../../models/character.model'
 import Permission from '../../models/permission.model'
+import _mongo from '../../helpers/mail.helper'
 
 function getResource (regexp) {
   const resource = regexp.toString().match(/\/\w+/g)[0]
@@ -15,13 +16,18 @@ async function getResourceDetail (stack, rootRoute) {
   for (let i = 0, len = stacks.length; i < len; i++) {
     let method = stacks[i].method
     let name = method + ' ' + url
-    let permission = new Permission({
+    let query = {
+      method,
+      resource,
+      url
+    }
+    let doc = {
       name,
       resource,
       url,
-      method: method
-    })
-    const permiss =  await permission.save()
+      method
+    }
+    const permiss =  _mongo.uniqSave(query, doc, Permission)
   }
   return
 }

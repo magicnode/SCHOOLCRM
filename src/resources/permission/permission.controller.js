@@ -5,7 +5,6 @@ import Permission from '../../models/permission.model'
 import APIError from '../../helpers/apierror.helper'
 import _mongo from '../../helpers/mongo.helper'
 
-
 /**
  * @api {get} /permission Request permission info
  * @apiName GetPermission
@@ -48,8 +47,36 @@ async function create(req, res, next) {
     }
 }
 
+async function show(req, res, next) {
+    try {
+        const { user_id } = req.user
+        const { name } = req.body
+        const doc = { name }
+        const permission = await _mongo.uniqSave(doc, doc, Permission)
+        return res.json(permission)
+    }catch (err) {
+        console.error(err)
+        err = new APIError(err.message, httpStatus.NOT_FOUND, true);
+        return next(err)
+    }
+}
+
+async function update(req, res, next) {
+    try {
+        const { _id } = req.params
+        const body = req.body
+        const permission = await Permission.update({_id}, body)
+        return res.json(permission)
+    }catch (err) {
+        console.error(err)
+        err = new APIError(err.message, httpStatus.NOT_FOUND, true);
+        return next(err)
+    }
+}
 
 export default {
     index,
-    create
+    create,
+    show,
+    update
 }

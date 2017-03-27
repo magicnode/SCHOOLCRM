@@ -6,10 +6,6 @@ import Permission from '../../models/permission.model'
 
 import _mongo from '../../helpers/mongo.helper'
 
-// getPermission()
-// getReqPath()
-// judgePermission()
-
 function rbac (o) {
   return async function rbacMiddleware (req, res, next) {
   	if (!req.user) {
