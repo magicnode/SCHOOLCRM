@@ -2,9 +2,9 @@
  * Module description: summary sheet 汇总报表
  */
 
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+import mongoose from 'mongoose'
 
+const Schema = mongoose.Schema
 const summarySchema = Schema({
 	number: String, //汇总报表编号
 	description: String, //描述

@@ -1,7 +1,8 @@
 /*
  * Module description: user 用户
  */
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
+
 const Schema = mongoose.Schema
 const userSchema = new Schema({
     name: { type: String, default: '' },

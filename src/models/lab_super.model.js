@@ -1,9 +1,9 @@
 /*
  * Module description: lab supervisor实验室主管
  */
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+import mongoose from 'mongoose'
 
+const Schema = mongoose.Schema
 const labSupervisorSchema = Schema({
   name: {
   	type: String,

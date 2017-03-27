@@ -2,7 +2,8 @@
  * Module description: character 角色
  */
 
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
+
 const Schema = mongoose.Schema
 const Types = Schema.Types
 const characterSchema = new Schema({

@@ -1,9 +1,9 @@
 /*
  * Module description: Goods 物品
  */
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+import mongoose from 'mongoose'
 
+const Schema = mongoose.Schema
 const goodsSchema = Schema({
   name: {
   	type: String,

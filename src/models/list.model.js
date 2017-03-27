@@ -1,8 +1,9 @@
 /*
  * Module description: 清单
  */
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+import mongoose from 'mongoose'
+
+const Schema = mongoose.Schema
 const listSchema = new Schema({
 	number: String, //清单编号
     name: {
@@ -18,9 +19,5 @@ const listSchema = new Schema({
 })
 
 listSchema.index({ name: 1}, {unique:true, background:true, w:1})
-
-listSchema.statics = {
-
-}
 
 export default mongoose.model('Lab', listSchema, 'lab');

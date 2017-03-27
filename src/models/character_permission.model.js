@@ -2,7 +2,8 @@
  * Module description: character 角色 权限permission 关系
  */
 
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
+
 const Schema = mongoose.Schema
 const characterPermissionSchema = new Schema({
 	  character: {type: Schema.Types.ObjectId, ref: 'Character'},

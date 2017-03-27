@@ -1,8 +1,9 @@
 /*
  * Module description: 实验室 schema
  */
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+import mongoose from 'mongoose'
+
+const Schema = mongoose.Schema
 const labSchema = new Schema({
     name: {
     	type: String,

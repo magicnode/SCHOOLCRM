@@ -1,9 +1,9 @@
 /*
  * Module description: department 学院 工程训练中心
  */
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+import mongoose from 'mongoose'
 
+const Schema = mongoose.Schema
 const departmentSchema = Schema({
   name: {
   	type: String,
