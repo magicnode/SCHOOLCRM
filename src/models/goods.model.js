@@ -9,6 +9,7 @@ const goodsSchema = Schema({
   	type: String,
   	unique:true
   },
+  unit: String, //剂量 单位
   price: Number, //参考价格
   description: String, //描述
   lab: { type: Schema.Types.ObjectId, ref: 'Lab' },

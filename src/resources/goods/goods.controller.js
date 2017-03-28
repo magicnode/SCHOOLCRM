@@ -11,7 +11,7 @@ async function index(req, res, next) {
             skip = Number(reqquery.skip) || 0,
             limit = Number(reqquery.limit) || 50
         let query = {}
-        const list = await _mongo.list({ limit, skip, Goods})
+        const list = await _mongo.list({ limit, skip, Mon: Goods})
         return res.json(list)
     }catch (err) {
         console.error(err)
@@ -22,8 +22,9 @@ async function index(req, res, next) {
 
 async function create(req, res, next) {
     try {
-        const doc = { name, price, description, _lab, _classify } = req.body
-        const goods = await _mongo.uniqSave({ name }, doc, Character)
+        const { name, price, description, unit } = req.body
+        const doc = { name, price, description, unit}
+        const goods = await _mongo.uniqSave({ name }, doc, Goods)
         return res.json(goods)
     }catch (err) {
         console.error(err)

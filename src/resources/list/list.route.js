@@ -7,6 +7,10 @@ router.route('/')
 	    .get(Ctrl.index)
 	    .post(Ctrl.create)
 
+router.route('/:_id')
+ 	    .get(Ctrl.show)
+	    .put(Ctrl.update)
+
 export default {
 	router,
 	baseUrl: '/lists'
