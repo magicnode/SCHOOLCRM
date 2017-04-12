@@ -11,7 +11,7 @@ const labSchema = new Schema({
     },
     description: String, //描述
     _depart: { type: Schema.Types.ObjectId, ref: 'Department' },//所属院系或工程训练中心
-    _supervisors: [{ type: Schema.Types.ObjectId, ref: 'LabSupervisor' }],//主管人员
+    _supervisors: [{ type: Schema.Types.ObjectId, ref: 'User' }],//主管人员
     _goods: [{ type: Schema.Types.ObjectId, ref: 'Goods' }],//物品
     CreateAt: { type: Number, default: new Date().getTime() }
 })
