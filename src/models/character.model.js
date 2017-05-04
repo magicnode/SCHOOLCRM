@@ -1,7 +1,6 @@
 /*
  * Module description: character 角色
  */
-
 import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema
@@ -11,7 +10,7 @@ const characterSchema = new Schema({
     	type: String, 
     	required: true,
     	unique: true
-    }, //角色名字:审计处、财务处和校长,实验室主管,实验室员工，材料管理科， 库房管理员
+    }, //角色名字: 审计处、财务处、校长、实验室主管、实验室员工、材料管理科、库房管理员
     user: {type: Types.ObjectId, ref: 'User'}, //创建者
     CreateAt: { type: Number, default: new Date().getTime() }
 })

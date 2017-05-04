@@ -13,7 +13,11 @@ const listSchema = new Schema({
     status: {type: Number, default: 1, enum: [1,2,3,4]},//1 未审批、2 正在审批 3 审批结束
     description: String, //描述
     lab: { type: Schema.Types.ObjectId, ref: 'Lab' },//所属实验室
+<<<<<<< HEAD
     supervisors: { type: Schema.Types.ObjectId, ref: 'LabSupervisor' },//主管人员 审批人员
+=======
+    supervisors: { type: Schema.Types.ObjectId, ref: 'User' },//主管人员 审批人员
+>>>>>>> 3dea48650edc70a990bd53c49aeacfd51189b41d
     goods: [{ type: Schema.Types.ObjectId, ref: 'Goods' }],//清单物品
     CreateAt: { type: Number, default: new Date().getTime() }
 })
