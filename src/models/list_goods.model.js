@@ -11,6 +11,4 @@ const listGoodsSchema = new Schema({
   CreateAt: { type: Number, default: new Date().getTime() }
 })
 
-listGoodsSchema.index({ name: 1 }, { unique: true, background: true, w: 1 })
-
 export default mongoose.model('ListGoods', listGoodsSchema, 'list_goods')

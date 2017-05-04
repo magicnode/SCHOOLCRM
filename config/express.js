@@ -48,27 +48,33 @@ if (config.env === 'production') {
 app.use(cors(corsOptions))
 app.disable('x-powered-by')
 
-//express jwt config
-// app.use(expressJwt({
-//   secret: config.jwtSecret,
-//   getToken (req) {
-//     if (req.headers.authorization) {
-//         return req.headers.authorization;
-//     } else if (req.query && req.query.token) {
-//       return req.query.token;
-//     }
-//     return null;
-//   }
-// }).unless({path: [
-//   {url: '/', methods: ['GET']},
-//   {url: '/users', methods: ['POST']},
-//   {url: '/auth', methods: ['GET', 'POST']},
-//   {url: '/permission/check', methods: ['GET']},
-//   {url: /\/spiders\/\w+/, methods: ['GET']}
-// ]}))
+// express jwt config
+app.use(expressJwt({
+  secret: config.jwtSecret,
+  getToken (req) {
+    if (req.headers.authorization) {
+        return req.headers.authorization;
+    } else if (req.query && req.query.token) {
+      return req.query.token;
+    }
+    return null;
+  }
+}).unless({path: [
+  {url: '/', methods: ['GET']},
+  {url: '/users', methods: ['POST']},
+  {url: '/auth', methods: ['GET', 'POST']},
+  {url: '/characters', methods: ['GET']},
+  {url: /\/characters\/\w+\/noauthpermission/, methods: ['GET']},
+  {url: /\/characters\/\w+\/permission/, methods: ['GET', 'POST', 'DELETE']},
+  {url: '/permission/check', methods: ['GET']},
+  {url: '/goods', methods: ['GET', 'POST']},
+  {url: '/lists', methods: ['GET', 'POST']},
+  {url: /\/lists\/\w+/, methods: ['PUT', 'GET']},
+  {url: /\/spiders\/\w+/, methods: ['GET']}
+]}))
 
 // app.use(RBAC({}))
-// app.use(Permission({routes: routes}))
+app.use(Permission({routes: routes}))
 
 app.use('/', routes);
 

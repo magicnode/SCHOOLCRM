@@ -1,7 +1,7 @@
 import User from '../../models/user.model'
 import Character from '../../models/character.model'
 import Permission from '../../models/permission.model'
-import _mongo from '../../helpers/mail.helper'
+import _mongo from '../../helpers/mongo.helper'
 
 function getResource (regexp) {
   const resource = regexp.toString().match(/\/\w+/g)[0]
