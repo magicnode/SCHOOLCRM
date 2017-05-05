@@ -5,20 +5,16 @@ import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema
 const listSchema = new Schema({
-	number: String, //清单编号
+	  number: String, //清单编号
     name: {
     	type: String,
     	unique:true
     },
     status: {type: Number, default: 1, enum: [1,2,3,4]},//1 未审批、2 正在审批 3 审批结束
     description: String, //描述
+    listgoods: [{type: Schema.Types.ObjectId, ref: 'ListGoods'}],
     lab: { type: Schema.Types.ObjectId, ref: 'Lab' },//所属实验室
-<<<<<<< HEAD
-    supervisors: { type: Schema.Types.ObjectId, ref: 'LabSupervisor' },//主管人员 审批人员
-=======
-    supervisors: { type: Schema.Types.ObjectId, ref: 'User' },//主管人员 审批人员
->>>>>>> 3dea48650edc70a990bd53c49aeacfd51189b41d
-    goods: [{ type: Schema.Types.ObjectId, ref: 'Goods' }],//清单物品
+    term: { type: Schema.Types.ObjectId, ref: 'Term' }, //所属学期
     CreateAt: { type: Number, default: new Date().getTime() }
 })
 
