@@ -13,9 +13,12 @@ async function create(req, res, next) {
     try {
         let { name, pwd } = req.body
         let query = {name}
-        let user = await User.findOne(query)
+        let user = await User.findOne({name}).populate('lab')
         if (!user) {
-            return res.send('no such user')
+            user = await User.findOne({email: name}).populate('lab')
+            if (!user) {
+              return res.send('no such user')
+            }
         }
         const truepwd = await _crypto.decipherpromise(user.hashed_password, user.salt)
         if (truepwd !== pwd) {
@@ -23,12 +26,13 @@ async function create(req, res, next) {
         }
         const jwt_token = {
             user_id: user._id,
-            name: user.name
+            name: user.name,
+            username: user.username
         }
         const token = JWT.sign(jwt_token, jwtsecret, {
             expiresIn: '2000h'
         })
-        return res.json({token})
+        return res.json({token, user})
     } catch (err) {
         console.error(err)
         err = new APIError(err.message, httpStatus.NOT_FOUND, true);
@@ -37,7 +41,7 @@ async function create(req, res, next) {
 }
 
 function check(req, res, next) {
-    const params = req.params;
+    const params = req.params
     User.findOneAndRemove(params)
         .then(result => {
             return res.json(result)

@@ -5,7 +5,7 @@ import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema
 const listSchema = new Schema({
-	  number: String, //清单编号
+	number: String, //清单编号
     name: {
     	type: String,
     	unique:true

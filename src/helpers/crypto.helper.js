@@ -66,13 +66,16 @@ function randomWord(randomFlag, min, max, callback) {
 function cipherpromise(str, key) {
     return new Promise((resolve, reject) => {
         try {
+            console.log('key', key)
+            console.log('key type', typeof key)
             let encrypted = "",
-                cip = crypto.createCipher('aes192', key);
-            encrypted += cip.update(str, 'binary', 'hex');
-            encrypted += cip.final('hex');
-            resolve(encrypted);
+                cip = crypto.createCipher('aes192', key.toString())
+            encrypted += cip.update(str, 'binary', 'hex')
+            encrypted += cip.final('hex')
+            resolve(encrypted)
         } catch (e) {
-            reject(e);
+            console.error(e)
+            reject(e)
         }
     })
 }
@@ -81,13 +84,17 @@ function cipherpromise(str, key) {
 function decipherpromise(str, key) {
     return new Promise((resolve, reject) => {
         try {
-            var decrypted = "";
-            var decipher = crypto.createDecipher('aes192', key);
-            decrypted += decipher.update(str, 'hex', 'binary');
-            decrypted += decipher.final('binary');
-            resolve(decrypted);
+            var decrypted = ""
+            console.log('key', key)
+            console.log('key type', typeof key)
+            key = key.toString()
+            var decipher = crypto.createDecipher('aes192', key)
+            decrypted += decipher.update(str, 'hex', 'binary')
+            decrypted += decipher.final('binary')
+            resolve(decrypted)
         } catch (e) {
-            reject(e);
+            console.error(e)
+            reject(e)
         }
     })
 }

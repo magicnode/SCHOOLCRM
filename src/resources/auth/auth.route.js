@@ -4,7 +4,6 @@ import authCtrl from './auth.controller';
 const router = express.Router();
 
 router.route('/')
-      .get(authCtrl.create)
       .post(authCtrl.create)
 
 router.route('/:id')

@@ -1,6 +1,7 @@
 import httpStatus from 'http-status'
 
 import Lists from '../../models/list.model'
+import User from '../../models/user.model'
 
 import APIError from '../../helpers/apierror.helper'
 import _mongo from '../../helpers/mongo.helper'
@@ -22,8 +23,12 @@ async function index(req, res, next) {
 
 async function create(req, res, next) {
     try {
-        const { name, description } = req.body
-        const doc = { name, description }
+        const { name, description, term } = req.body
+        const {user_id} = req.user
+        console.log('user', req.user)
+        const user = await User.findOne({_id: user_id})
+        console.log('user', user)
+        const doc = { name, description, lab: user.lab, term }
         const lists = await _mongo.uniqSave({ name }, doc, Lists)
         return res.json(lists)
     }catch (err) {

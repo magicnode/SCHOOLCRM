@@ -1,17 +1,12 @@
 import httpStatus from 'http-status'
-
-import Goods from '../../models/goods.model'
+import Term from '../../models/term.model'
 
 import APIError from '../../helpers/apierror.helper'
 import _mongo from '../../helpers/mongo.helper'
 
 async function index(req, res, next) {
     try {
-        let reqquery = req.query,
-            skip = Number(reqquery.skip) || 0,
-            limit = Number(reqquery.limit) || 50
-        let query = {}
-        const list = await _mongo.list({ limit, skip, Goods})
+        const list = await _mongo.list({Mon: Term})
         return res.json(list)
     }catch (err) {
         console.error(err)
@@ -22,14 +17,16 @@ async function index(req, res, next) {
 
 async function create(req, res, next) {
     try {
-        const doc = { name, price, description, _lab, _classify } = req.body
-        const goods = await _mongo.uniqSave({ name }, doc, Character)
-        return res.json(goods)
+        const { name, depart, description } = req.body
+        const doc = { name, depart, description}
+        const term = await _mongo.uniqSave({ name }, doc, Term)
+        return res.json(term)
     }catch (err) {
         console.error(err)
         err = new APIError(err.message, httpStatus.NOT_FOUND, true);
         return next(err)
     }
+
 }
 
 function show(req, res, next) {

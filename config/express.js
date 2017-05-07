@@ -67,10 +67,7 @@ app.use(expressJwt({
   {url: /\/characters\/\w+\/noauthpermission/, methods: ['GET']},
   {url: /\/characters\/\w+\/permission/, methods: ['GET', 'POST', 'DELETE']},
   {url: '/permission/check', methods: ['GET']},
-  {url: '/goods', methods: ['GET', 'POST']},
-  {url: '/lists', methods: ['GET', 'POST']},
-  {url: /\/lists\/\w+/, methods: ['PUT', 'GET']},
-  {url: /\/spiders\/\w+/, methods: ['GET']}
+  {url: '/labs', methods: ['GET']}
 ]}))
 
 // app.use(RBAC({}))

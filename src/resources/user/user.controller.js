@@ -39,15 +39,18 @@ function index(req, res, next) {
 
 async function create(req, res, next) {
     try {
-        let { name, pwd } = req.body
+        let { name, pwd, username, lab, email } = req.body
         let query = {name}
         let user = await User.findOne(query)
         if (user) {
-            return res.send('this name is already token')
+            return res.status(500).send('this name is already token')
         }
         let salt = new Date().getTime().toString()
+        if (!pwd) {
+            return res.status(500).send('this pwd is none')
+        }
         pwd = await _crypto.cipherpromise(pwd, salt)
-        let doc = {name, hashed_password: pwd, salt}
+        let doc = {name, hashed_password: pwd, username, salt, lab, email}
         user = await _mongo.uniqSave(query, doc, User)
         const jwt_token = {
             user_id: user._id,

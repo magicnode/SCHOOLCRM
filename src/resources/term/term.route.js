@@ -1,5 +1,5 @@
 import express from 'express'
-import Ctrl from './lab.controller'
+import Ctrl from './term.controller'
 
 const router = express.Router();
 
@@ -9,5 +9,5 @@ router.route('/')
 
 export default {
 	router,
-	baseUrl: '/labs'
+	baseUrl: '/terms'
 }

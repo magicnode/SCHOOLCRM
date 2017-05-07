@@ -10,6 +10,7 @@ const userSchema = new Schema({
     username: { type: String, default: '', uniq: true },
     hashed_password: { type: String, default: '' },
     salt: { type: String, default: '' },
+    lab: { type: Schema.Types.ObjectId, ref: 'Lab' }, //所属实验室
     CreateAt: { type: Number, default: new Date().getTime() }
 })
 
