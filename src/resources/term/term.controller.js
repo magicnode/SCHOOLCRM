@@ -17,8 +17,8 @@ async function index(req, res, next) {
 
 async function create(req, res, next) {
     try {
-        const { name, depart, description } = req.body
-        const doc = { name, depart, description}
+        const { name, description } = req.body
+        const doc = { name, description}
         const term = await _mongo.uniqSave({ name }, doc, Term)
         return res.json(term)
     }catch (err) {
@@ -26,7 +26,6 @@ async function create(req, res, next) {
         err = new APIError(err.message, httpStatus.NOT_FOUND, true);
         return next(err)
     }
-
 }
 
 function show(req, res, next) {
@@ -37,8 +36,17 @@ function update(req, res, next) {
 
 }
 
-function destroy(req, res, next) {
-
+async function destroy(req, res, next) {
+    try {
+        const { _id } = req.body
+        const term = await Term.remove({_id})
+        console.log(`id is ${_id}, term is ${term}`)
+        return res.json(term)
+    }catch (err) {
+        console.error(err)
+        err = new APIError(err.message, httpStatus.NOT_FOUND, true);
+        return next(err)
+    }
 }
 
 export default {

@@ -5,7 +5,8 @@ const router = express.Router();
 
 router.route('/')
       .get(Ctrl.index)
-      .post(Ctrl.create);
+      .post(Ctrl.create)
+      .delete(Ctrl.destroy)
 
 export default {
 	router,
