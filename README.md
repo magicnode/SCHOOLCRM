@@ -46,3 +46,11 @@ es6编码
 - [ ] 对主管审批后的清单进行汇总, 根据期末日期来定义
 - [ ] 材料管理科根据清单汇总购买物品并入库
 - [ ] 完善API文档
+
+services.msc
+
+mongod --logpath "E:\mongodb\logs\mongo.log" --logappend --dbpath "E:\mongodb\data\db" --directoryperdb --serviceName "MongoDB" --serviceDisplayName "MongoDB" --install
+
+sc delete mongodb
+
+创建mongo.cfg文件指向data

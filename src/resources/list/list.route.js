@@ -10,6 +10,7 @@ router.route('/')
 router.route('/:_id')
  	    .get(Ctrl.show)
 	    .put(Ctrl.update)
+	    .patch(Ctrl.update)
 
 export default {
 	router,

@@ -10,7 +10,7 @@ const listSchema = new Schema({
     	type: String,
     	unique:true
     },
-    status: {type: Number, default: 1, enum: [1,2,3,4]},//1 未审批、2 正在审批 3 审批结束
+    status: {type: Number, default: 0, enum: [0, 1,2,3,4]},//0 未完成还在填写 1 未审批、2 正在审批 3 审批结束
     description: String, //描述
     listgoods: [{type: Schema.Types.ObjectId, ref: 'ListGoods'}],
     lab: { type: Schema.Types.ObjectId, ref: 'Lab' },//所属实验室

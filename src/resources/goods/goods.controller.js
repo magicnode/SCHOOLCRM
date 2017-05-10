@@ -37,12 +37,30 @@ function show(req, res, next) {
 
 }
 
-function update(req, res, next) {
-
+async function update(req, res, next) {
+    try {
+        const { _id } = req.params
+        const { name, price, description, unit } = req.body
+        const doc = { name, price, description, unit}
+        const goods = await Goods.update({_id}, doc)
+        return res.json(goods)
+    }catch (err) {
+        console.error(err)
+        err = new APIError(err.message, httpStatus.NOT_FOUND, true);
+        return next(err)
+    }
 }
 
-function destroy(req, res, next) {
-
+async function destroy(req, res, next) {
+    try {
+        const { _id } = req.params
+        const goods = await Goods.remove({_id})
+        return res.json(goods)
+    }catch (err) {
+        console.error(err)
+        err = new APIError(err.message, httpStatus.NOT_FOUND, true);
+        return next(err)
+    }
 }
 
 export default {

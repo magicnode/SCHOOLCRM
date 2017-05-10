@@ -3,6 +3,7 @@ import JWT from 'jsonwebtoken'
 
 import User from '../../models/user.model'
 import UserCharacter from '../../models/user_character.model'
+import Labs from '../../models/lab.model'
 
 import APIError from '../../helpers/apierror.helper';
 import _crypto from '../../helpers/crypto.helper'
@@ -59,10 +60,12 @@ async function create(req, res, next) {
         const token = await JWT.sign(jwt_token, jwtsecret, {
             expiresIn: '2000h'
         })
+        const labData = await Labs.findOne({_id: lab})
         const backData = {
             token,
             name: user.name,
-            username: user.username
+            username: user.username,
+            lab: labData
         }
         return res.json(backData)
     } catch (err) {
