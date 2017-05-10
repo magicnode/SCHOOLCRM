@@ -11,7 +11,6 @@ const userCharacterSchema = new Schema({
 })
 
 userCharacterSchema.statics = {
-
 }
 
 export default mongoose.model('userCharacter', userCharacterSchema, 'user_character')

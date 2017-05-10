@@ -40,17 +40,11 @@ async function create(req, res, next) {
     }
 }
 
-function check(req, res, next) {
-    const params = req.params
-    User.findOneAndRemove(params)
-        .then(result => {
-            return res.json(result)
-        })
-        .catch(err => {
-            console.error(err)
-            err = new APIError(err.message, httpStatus.NOT_FOUND, true);
-            return next(err);
-        })
+async function check(req, res, next) {
+    const user = req.user
+    console.log('user', user)
+    const resdata = await User.findOne({_id: user.user_id}).populate('lab')
+    return res.json(resdata)
 }
 
 export default {

@@ -6,10 +6,6 @@ const router = express.Router();
 router.route('/')
       .post(authCtrl.create)
 
-router.route('/:id')
-      .get(authCtrl.create)
-      .post(authCtrl.create)
-
 router.route('/check')
     .post(authCtrl.check)
 

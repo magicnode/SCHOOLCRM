@@ -15,6 +15,7 @@ const listSchema = new Schema({
     listgoods: [{type: Schema.Types.ObjectId, ref: 'ListGoods'}],
     lab: { type: Schema.Types.ObjectId, ref: 'Lab' },//所属实验室
     term: { type: Schema.Types.ObjectId, ref: 'Term' }, //所属学期
+    material_status: {type: Number, default: 1, enum: [1,2]}, //1 未买、2 买完
     CreateAt: { type: Number, default: new Date().getTime() }
 })
 

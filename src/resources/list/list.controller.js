@@ -14,7 +14,10 @@ async function index(req, res, next) {
             skip = Number(reqquery.skip) || 0,
             limit = Number(reqquery.limit) || 50
         let query = {}
-        const list = await _mongo.list({ limit, skip, Mon: Lists}).populate('goods')
+        let list = await _mongo.list({ limit, skip, Mon: Lists})
+                               .populate('lab')
+                               .populate('listgoods')
+                               .populate('term')
         return res.json(list)
     }catch (err) {
         console.error(err)
@@ -67,10 +70,10 @@ async function show(req, res, next) {
 async function update(req, res, next) {
     try {
         const { _id } = req.params
-        let { goods, count } = req.body
+        let { goods, count, name, price, unit } = req.body
         let lists = {}
         if (goods) {
-            const listgoods = new ListGoods({ goods, count, list: _id })
+            const listgoods = new ListGoods({ goods, count, list: _id, price, unit, name })
             const saveres = await listgoods.save()
             if (!saveres._id) {
               return res.status(500).send('fail')
